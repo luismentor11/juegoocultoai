@@ -11,6 +11,20 @@ st.set_page_config(
 st.title("🎭 El Juego Oculto")
 st.caption("By Mentora – Autoconocimiento con honestidad brutal (en la dosis que elijas).")
 
+st.markdown(
+    """
+### ¿Qué hace este juego?
+1. Entrás con un problema real (plata, tiempo, vínculos, etc.).
+2. El sistema lee tu historia y te muestra **el juego viejo** que estás jugando.
+3. Te devuelve un **informe** con:
+   - tu patrón,
+   - el juego oculto (reglas, miedos, beneficio),
+   - y **primeros pasos concretos** para jugar un juego nuevo.
+
+---
+"""
+)
+
 # ---------- INICIALIZAR CLIENTE OPENAI ----------
 # Importante: en Streamlit Cloud tenés que cargar tu clave en:
 # Settings → Secrets → {"OPENAI_API_KEY": "tu_clave_aca"}
@@ -191,7 +205,7 @@ Tono general:
 
 # ---------- UI PRINCIPAL ----------
 
-st.markdown("### Contame dónde te está apretando el zapato hoy")
+st.markdown("### 1️⃣ Elegí cómo querés que te hable")
 
 with st.form("juego_oculto_form"):
     modo = st.radio(
@@ -205,8 +219,11 @@ with st.form("juego_oculto_form"):
         help="Elegí desde más suave hasta samurai al hueso.",
     )
 
+    st.markdown("---")
+    st.markdown("### 2️⃣ ¿Dónde te aprieta más el zapato hoy?")
+
     area = st.selectbox(
-        "¿En qué área sentís más fuerte este quilombo hoy?",
+        "Área principal donde sentís el quilombo:",
         [
             "Dinero / trabajo / decisiones económicas",
             "Tiempo / foco / organización",
@@ -220,8 +237,11 @@ with st.form("juego_oculto_form"):
         ],
     )
 
+    st.markdown("---")
+    st.markdown("### 3️⃣ Contame el dolor y la película que se repite")
+
     dolor = st.text_area(
-        "Decime en pocas líneas: ¿qué es lo que más te duele o te cansa de esta situación?",
+        "¿Qué es lo que más te duele o te cansa de esta situación?",
         height=120,
         placeholder="Ej: Siempre llego con lo justo con la plata; vivo apagando incendios y no termino de ordenar nada...",
     )
@@ -232,10 +252,13 @@ with st.form("juego_oculto_form"):
         placeholder="Ej: Llega la fecha del alquiler, miro la cuenta y otra vez estoy al límite...",
     )
 
+    st.markdown("---")
+    st.markdown("### 4️⃣ Algo más que quieras aclarar (opcional)")
+
     extra = st.text_area(
-        "Si hay algo más que quieras aclarar (opcional)",
+        "Contexto, personas involucradas, cómo reaccionás, qué ya intentaste, etc. (opcional)",
         height=100,
-        placeholder="Ej: contexto, personas involucradas, cómo reaccionás, qué ya intentaste, etc.",
+        placeholder="Si no tenés nada más para agregar, podés dejar esto vacío.",
     )
 
     submitted = st.form_submit_button("Ver mi juego oculto 🎭")
@@ -252,7 +275,7 @@ Modo de verdad elegido por el usuario: {modo}
 
 Área principal de dolor: {area}
 
-Dolor principal (palras del usuario):
+Dolor principal (palabras del usuario):
 \"\"\"{dolor.strip()}\"\"\"
 
 Escena concreta que se repite:
@@ -298,3 +321,17 @@ Devuelve el resultado en formato Markdown.
 
             except Exception as e:
                 st.error(f"Ocurrió un error al llamar a la API: {e}")
+
+# ---------- AVISO LEGAL EN EXPANDER ----------
+st.markdown("---")
+with st.expander("🧾 Aviso legal y límites de El Juego Oculto"):
+    st.markdown(
+        """
+- El Juego Oculto es una herramienta de **exploración personal y autoconocimiento**, con fines educativos.
+- No constituye ni reemplaza terapia psicológica, psiquiátrica ni tratamiento médico.
+- No ofrece diagnóstico, prescripción ni intervención clínica.
+- Las decisiones que tomes a partir de lo que veas acá son **tu responsabilidad**.
+- Si estás atravesando una crisis fuerte, ideación suicida o una situación límite,
+  buscá ayuda profesional o servicios de emergencia en tu zona.
+"""
+    )
