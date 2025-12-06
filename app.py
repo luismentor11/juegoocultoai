@@ -25,7 +25,8 @@ Reglas:
 - Una sola intervención por vez.
 """
 
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]  # viene de los secrets de Streamlit Cloud
+# La API key viene de los secrets de Streamlit Cloud
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 
 def call_openai(messages):
@@ -50,27 +51,35 @@ def call_openai(messages):
 
 def main():
     st.title("El Juego Oculto – Test con OpenAI")
-
     st.write("Contame en qué área de tu vida sentís más ruido o conflicto hoy, y qué es lo que más te duele de eso.")
 
+    # Inicializar historial de chat
     if "chat" not in st.session_state:
         st.session_state.chat = [
             {"role": "system", "content": SYSTEM_PROMPT}
         ]
 
-    user_input = st.text_area("Escribí acá lo que te pasa:", height=150)
+    # Mostrar historial como burbujas
+    for msg in st.session_state.chat:
+        if msg["role"] == "user":
+            with st.chat_message("user"):
+                st.write(msg["content"])
+        elif msg["role"] == "assistant":
+            with st.chat_message("assistant"):
+                st.write(msg["content"])
 
-    if st.button("Jugar / Ver diagnóstico"):
-        if user_input.strip():
-            st.session_state.chat.append({"role": "user", "content": user_input.strip()})
+    # Input de chat abajo
+    prompt = st.chat_input("Escribí acá lo que te pasa:")
+    if prompt:
+        # Mensaje del usuario
+        st.session_state.chat.append({"role": "user", "content": prompt})
+
+        # Respuesta del Juego Oculto (OpenAI)
+        with st.chat_message("assistant"):
             with st.spinner("Pensando..."):
                 respuesta = call_openai(st.session_state.chat)
             st.session_state.chat.append({"role": "assistant", "content": respuesta})
-
-    mensajes_ai = [m for m in st.session_state.chat if m["role"] == "assistant"]
-    if mensajes_ai:
-        st.markdown("### Respuesta del Juego Oculto (OpenAI):")
-        st.write(mensajes_ai[-1]["content"])
+            st.write(respuesta)
 
 
 if __name__ == "__main__":
