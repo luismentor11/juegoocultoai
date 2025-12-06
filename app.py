@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 st.title("🎭 El Juego Oculto")
-st.caption("By Mentora – Autoconocimiento con honestidad brutal (a la dosis que elijas).")
+st.caption("By Mentora – Autoconocimiento con honestidad brutal (en la dosis que elijas).")
 
 # ---------- INICIALIZAR CLIENTE OPENAI ----------
 # Importante: en Streamlit Cloud tenés que cargar tu clave en:
@@ -18,7 +18,7 @@ try:
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 except KeyError:
     st.error(
-        "No encontré `OPENAI_API_KEY` en los Secrets de Streamlit.\n"
+        "No encontré `OPENAI_API_KEY` en los Secrets de Streamlit.\n\n"
         "Andá a *Settings → Secrets* y agregá tu clave de OpenAI antes de seguir."
     )
     st.stop()
@@ -196,9 +196,13 @@ st.markdown("### Contame dónde te está apretando el zapato hoy")
 with st.form("juego_oculto_form"):
     modo = st.radio(
         "¿En qué tono querés que te hable?",
-        options=["☕️ Modo Mate Tranqui", "🧢 Modo Entrenador de Vestuario", "⚔️ Honestidad Brutal – Modo Samurai"],
+        options=[
+            "☕️ Modo Mate Tranqui",
+            "🧢 Modo Entrenador de Vestuario",
+            "⚔️ Honestidad Brutal – Modo Samurai",
+        ],
         index=2,
-        help="Podés elegir desde más suave hasta samurai al hueso."
+        help="Elegí desde más suave hasta samurai al hueso.",
     )
 
     area = st.selectbox(
@@ -212,26 +216,26 @@ with st.form("juego_oculto_form"):
             "Cuerpo / energía / salud",
             "Propósito / proyecto de vida",
             "Autoestima / narrativa interna",
-            "Otra / mezcla rara"
+            "Otra / mezcla rara",
         ],
     )
 
     dolor = st.text_area(
         "Decime en pocas líneas: ¿qué es lo que más te duele o te cansa de esta situación?",
         height=120,
-        placeholder="Ej: Siempre llego con lo justo con la plata; vivo apagando incendios y no termino de ordenar nada..."
+        placeholder="Ej: Siempre llego con lo justo con la plata; vivo apagando incendios y no termino de ordenar nada...",
     )
 
     escena = st.text_area(
         "Contame una escena concreta que se repita (la película que ya te sabés de memoria)",
         height=140,
-        placeholder="Ej: Llega la fecha del alquiler, miro la cuenta y otra vez estoy al límite..."
+        placeholder="Ej: Llega la fecha del alquiler, miro la cuenta y otra vez estoy al límite...",
     )
 
     extra = st.text_area(
         "Si hay algo más que quieras aclarar (opcional)",
         height=100,
-        placeholder="Ej: contexto, personas involucradas, cómo reaccionás, qué ya intentaste, etc."
+        placeholder="Ej: contexto, personas involucradas, cómo reaccionás, qué ya intentaste, etc.",
     )
 
     submitted = st.form_submit_button("Ver mi juego oculto 🎭")
@@ -248,7 +252,7 @@ Modo de verdad elegido por el usuario: {modo}
 
 Área principal de dolor: {area}
 
-Dolor principal (palabras del usuario):
+Dolor principal (palras del usuario):
 \"\"\"{dolor.strip()}\"\"\"
 
 Escena concreta que se repite:
@@ -279,9 +283,18 @@ Devuelve el resultado en formato Markdown.
                     temperature=0.7,
                 )
                 output = response.choices[0].message.content
+
                 st.markdown("---")
                 st.subheader("🧾 Tu informe del Juego Oculto")
                 st.markdown(output)
+
+                # ---------- BOTÓN DE DESCARGA ----------
+                st.download_button(
+                    label="📥 Descargar informe (.txt)",
+                    data=output,
+                    file_name="juego_oculto_informe.txt",
+                    mime="text/plain",
+                )
 
             except Exception as e:
                 st.error(f"Ocurrió un error al llamar a la API: {e}")
