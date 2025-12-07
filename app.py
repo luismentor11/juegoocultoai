@@ -13,8 +13,21 @@ st.caption("By Mentora – Autoconocimiento con honestidad brutal (en la dosis q
 
 st.markdown(
     """
+### ¿Qué es El Juego Oculto?
+
+El Juego Oculto es el **mapa invisible de patrones internos** que repetís en automático:  
+decisiones, emociones y reacciones que nacen de tu inconsciente, de tus heridas  
+y de tus lealtades invisibles.
+
+Mientras no lo ves, jugás en piloto automático.  
+Cuando lo ves, podés cambiar las reglas, diseñar un juego nuevo y crear resultados distintos  
+en tu dinero, tus relaciones, tu cuerpo y tus proyectos.
+
+---
+
 ### ¿Qué hace este juego?
-1. Entrás con un problema real (plata, tiempo, vínculos, etc.).
+
+1. Entrás con un problema real o un ruido mental que te tenga cansado.
 2. El sistema lee tu historia y te muestra **el juego viejo** que estás jugando.
 3. Te devuelve un **informe** con:
    - tu patrón,
@@ -152,7 +165,7 @@ Siempre devolvés un informe estructurado en este formato (en español, claro y 
 
 # 🔍 Dolor principal de hoy
 - Resumen breve del dolor actual, con las palabras del usuario.
-- Área principal donde pega (ej: dinero/tiempo, pareja, vínculos, cuerpo, propósito, etc.).
+- (Si lo ves útil, podés mencionar en qué área pega, pero sin que el usuario tenga que elegirla explícitamente.)
 
 # 🎭 Juego viejo que estás jugando
 - Nombre irónico del juego (ej: “Campeón Mundial del Último Minuto”).
@@ -220,35 +233,19 @@ with st.form("juego_oculto_form"):
     )
 
     st.markdown("---")
-    st.markdown("### 2️⃣ ¿Dónde te aprieta más el zapato hoy?")
-
-    area = st.selectbox(
-        "Área principal donde sentís el quilombo:",
-        [
-            "Dinero / trabajo / decisiones económicas",
-            "Tiempo / foco / organización",
-            "Pareja / intimidad",
-            "Familia / hijos / vínculos cercanos",
-            "Amistades / vida social",
-            "Cuerpo / energía / salud",
-            "Propósito / proyecto de vida",
-            "Autoestima / narrativa interna",
-            "Otra / mezcla rara",
-        ],
-    )
-
-    st.markdown("---")
-    st.markdown("### 3️⃣ Contame el dolor y la película que se repite")
+    st.markdown("### 2️⃣ Contame el ruido mental o el dolor que traés hoy")
 
     dolor = st.text_area(
-        "¿Qué es lo que más te duele o te cansa de esta situación?",
-        height=120,
+        "¿Qué es lo que más te duele, te cansa o te tiene con la cabeza prendida fuego?",
+        height=140,
         placeholder="Ej: Siempre llego con lo justo con la plata; vivo apagando incendios y no termino de ordenar nada...",
     )
 
+    st.markdown("### 3️⃣ Contame una escena concreta que se repita")
+
     escena = st.text_area(
-        "Contame una escena concreta que se repita (la película que ya te sabés de memoria)",
-        height=140,
+        "La película que ya te sabés de memoria (contame un momento típico donde esto se ve claro):",
+        height=160,
         placeholder="Ej: Llega la fecha del alquiler, miro la cuenta y otra vez estoy al límite...",
     )
 
@@ -273,8 +270,6 @@ if submitted:
             user_prompt = f"""
 Modo de verdad elegido por el usuario: {modo}
 
-Área principal de dolor: {area}
-
 Dolor principal (palabras del usuario):
 \"\"\"{dolor.strip()}\"\"\"
 
@@ -293,7 +288,10 @@ Usa un lenguaje coherente con el modo elegido:
 - Si el modo es Entrenador de Vestuario, sé directo y empático.
 - Si el modo es Samurai, prioriza la honestidad brutal, sin azúcar pero sin faltar el respeto.
 
-Devuelve el resultado en formato Markdown.
+No le pidas al usuario que elija un área (salud, negocios, etc.). Inferí vos, si hace falta,
+en qué áreas pega este juego a partir de lo que cuenta.
+
+Devolvé el resultado en formato Markdown.
 """
 
             try:
