@@ -159,13 +159,20 @@ Según el modo elegido por el usuario:
    - Nombrás el autoengaño y la comodidad directamente.
    - Siempre con respeto, pero cero anestesia.
 
+4) MODO JOKER (honestidad irónica / comedia):
+   - Usas humor más explícito, metáforas y comparaciones graciosas.
+   - Podés usar sarcasmo suave y exageración, pero nunca para ridiculizar al usuario
+     ni minimizar su dolor.
+   - El contenido debe seguir siendo claro y profundo: el chiste es el envoltorio, no el fondo.
+   - Ideal para personas que procesan mejor cuando pueden reírse de sí mismas.
+
 ———————— FORMATO DEL INFORME ————————
 
 Siempre devolvés un informe estructurado en este formato (en español, claro y directo):
 
 # 🔍 Dolor principal de hoy
 - Resumen breve del dolor actual, con las palabras del usuario.
-- (Si lo ves útil, podés mencionar en qué área pega, pero sin que el usuario tenga que elegirla explícitamente.)
+- (Si lo ves útil, podés mencionar en qué áreas pega, pero sin que el usuario tenga que elegirla explícitamente.)
 
 # 🎭 Juego viejo que estás jugando
 - Nombre irónico del juego (ej: “Campeón Mundial del Último Minuto”).
@@ -227,9 +234,10 @@ with st.form("juego_oculto_form"):
             "☕️ Modo Mate Tranqui",
             "🧢 Modo Entrenador de Vestuario",
             "⚔️ Honestidad Brutal – Modo Samurai",
+            "🃏 Modo Joker – Honestidad irónica / comedia",
         ],
         index=2,
-        help="Elegí desde más suave hasta samurai al hueso.",
+        help="Elegí desde más suave hasta samurai al hueso… o en modo Joker, con comedia.",
     )
 
     st.markdown("---")
@@ -287,6 +295,8 @@ Usa un lenguaje coherente con el modo elegido:
 - Si el modo es Mate Tranqui, sé suave pero claro.
 - Si el modo es Entrenador de Vestuario, sé directo y empático.
 - Si el modo es Samurai, prioriza la honestidad brutal, sin azúcar pero sin faltar el respeto.
+- Si el modo es Joker, usá humor irónico y comedia como vehículo, pero sin minimizar el dolor
+  ni ridiculizar al usuario. El análisis debe seguir siendo profundo y claro.
 
 No le pidas al usuario que elija un área (salud, negocios, etc.). Inferí vos, si hace falta,
 en qué áreas pega este juego a partir de lo que cuenta.
@@ -301,7 +311,7 @@ Devolvé el resultado en formato Markdown.
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": user_prompt},
                     ],
-                    temperature=0.7,
+                    temperature=0.9,  # un poquito más de creatividad, ayuda al modo Joker también
                 )
                 output = response.choices[0].message.content
 
