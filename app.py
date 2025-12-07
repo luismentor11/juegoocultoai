@@ -27,7 +27,7 @@ en tu dinero, tus relaciones, tu cuerpo y tus proyectos.
 
 ### ¿Qué hace este juego?
 
-1. Entrás con un problema real o un ruido mental que te tenga cansado.
+1. Respondés 7 preguntas sobre un problema real o un ruido mental que te tenga cansado.
 2. El sistema lee tu historia y te muestra **el juego viejo** que estás jugando.
 3. Te devuelve un **informe** con:
    - tu patrón,
@@ -39,8 +39,7 @@ en tu dinero, tus relaciones, tu cuerpo y tus proyectos.
 )
 
 # ---------- INICIALIZAR CLIENTE OPENAI ----------
-# Importante: en Streamlit Cloud tenés que cargar tu clave en:
-# Settings → Secrets → {"OPENAI_API_KEY": "tu_clave_aca"}
+# En Streamlit Cloud: Settings → Secrets → {"OPENAI_API_KEY": "tu_clave_aca"}
 try:
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 except KeyError:
@@ -172,7 +171,6 @@ Siempre devolvés un informe estructurado en este formato (en español, claro y 
 
 # 🔍 Dolor principal de hoy
 - Resumen breve del dolor actual, con las palabras del usuario.
-- (Si lo ves útil, podés mencionar en qué áreas pega, pero sin que el usuario tenga que elegirla explícitamente.)
 
 # 🎭 Juego viejo que estás jugando
 - Nombre irónico del juego (ej: “Campeón Mundial del Último Minuto”).
@@ -182,40 +180,14 @@ Siempre devolvés un informe estructurado en este formato (en español, claro y 
 
 # 🧩 Radiografía en 4 niveles
 ## 1. Disparadores
-- Lista simple de disparadores típicos.
-
 ## 2. Interpretaciones (la película que te contás)
-- Frases clave que el usuario se dice a sí mismo.
-- Una frase “núcleo” que sostenga el juego.
-
 ## 3. Emoción y cuerpo
-- Emoción principal (miedo, bronca, etc.).
-- Cómo se siente en el cuerpo.
-
 ## 4. Conducta / patrón
-- Qué hace casi siempre después, en términos concretos.
 
 # 🕳️ Juego oculto: reglas, miedos y beneficio
-## Reglas invisibles
-- 2 a 4 reglas internas no declaradas.
-
-## Miedos que este juego protege
-- 1 a 3 miedos de fondo.
-
-## Beneficio oculto
-- Qué gana el usuario manteniendo este juego (aunque le cueste).
-
 # 🎮 Nuevo juego posible
-- Nombre del nuevo juego (positivo, concreto, sin new-age vacío).
-- Breve descripción del nuevo juego.
-- 2–4 nuevas reglas fáciles de recordar.
-
 # 🚶 Primeros pasos (micro-movimientos)
-- 2–3 acciones específicas para los próximos 7 días.
-- 1 conversación incómoda o decisión concreta, si aplica.
-
 # 🧾 Aviso legal breve
-- Recordatorio de que esto es reflexión, no diagnóstico ni terapia.
 
 Tono general:
 - Claro, directo, humano.
@@ -223,7 +195,7 @@ Tono general:
   sin humillarlo ni minimizar su dolor.
 """
 
-# ---------- UI PRINCIPAL ----------
+# ---------- UI PRINCIPAL: 7 PREGUNTAS ----------
 
 st.markdown("### 1️⃣ Elegí cómo querés que te hable")
 
@@ -241,29 +213,41 @@ with st.form("juego_oculto_form"):
     )
 
     st.markdown("---")
-    st.markdown("### 2️⃣ Contame el ruido mental o el dolor que traés hoy")
+    st.markdown("### 2️⃣ Respondé las 7 preguntas del Juego Oculto")
 
-    dolor = st.text_area(
-        "¿Qué es lo que más te duele, te cansa o te tiene con la cabeza prendida fuego?",
-        height=140,
-        placeholder="Ej: Siempre llego con lo justo con la plata; vivo apagando incendios y no termino de ordenar nada...",
-    )
-
-    st.markdown("### 3️⃣ Contame una escena concreta que se repita")
-
-    escena = st.text_area(
-        "La película que ya te sabés de memoria (contame un momento típico donde esto se ve claro):",
-        height=160,
-        placeholder="Ej: Llega la fecha del alquiler, miro la cuenta y otra vez estoy al límite...",
-    )
-
-    st.markdown("---")
-    st.markdown("### 4️⃣ Algo más que quieras aclarar (opcional)")
-
-    extra = st.text_area(
-        "Contexto, personas involucradas, cómo reaccionás, qué ya intentaste, etc. (opcional)",
+    q1 = st.text_area(
+        "1) ¿Qué es lo que más te duele, te cansa o te tiene con la cabeza prendida fuego?",
         height=100,
-        placeholder="Si no tenés nada más para agregar, podés dejar esto vacío.",
+    )
+
+    q2 = st.text_area(
+        "2) Contame una escena concreta que se repite (la película que ya te sabés de memoria).",
+        height=120,
+    )
+
+    q3 = st.text_area(
+        "3) Después de esa escena, ¿qué hacés casi siempre? (aunque no te guste admitirlo).",
+        height=100,
+    )
+
+    q4 = st.text_area(
+        "4) En esos momentos, ¿qué te decís a vos mismo? (frases, pensamientos, historia que te contás).",
+        height=100,
+    )
+
+    q5 = st.text_area(
+        "5) ¿Qué emociones aparecen y cómo las sentís en el cuerpo? (miedo, bronca, tristeza, culpa, mezcla… ¿y dónde se siente?).",
+        height=100,
+    )
+
+    q6 = st.text_area(
+        "6) Si fueras brutalmente honesto: ¿qué ganás manteniendo este juego tal como está? (aunque sea feo admitirlo).",
+        height=100,
+    )
+
+    q7 = st.text_area(
+        "7) Si esto siguiera igual 12 meses, ¿qué es lo que más te asusta que pase? ¿Y qué te gustaría que fuera distinto?",
+        height=120,
     )
 
     submitted = st.form_submit_button("Ver mi juego oculto 🎭")
@@ -271,25 +255,40 @@ with st.form("juego_oculto_form"):
 # ---------- LLAMADO A OPENAI Y RESPUESTA ----------
 
 if submitted:
-    if not dolor.strip() or not escena.strip():
-        st.warning("Necesito al menos el dolor principal y una escena concreta para poder leerte bien.")
+    if not q1.strip() or not q2.strip():
+        st.warning("Necesito mínimo el dolor principal (1) y una escena concreta (2) para poder leerte bien.")
     else:
         with st.spinner("Analizando tu juego interno..."):
             user_prompt = f"""
 Modo de verdad elegido por el usuario: {modo}
 
-Dolor principal (palabras del usuario):
-\"\"\"{dolor.strip()}\"\"\"
+Respuestas del usuario a las 7 preguntas base del Juego Oculto:
 
-Escena concreta que se repite:
-\"\"\"{escena.strip()}\"\"\"
+1) Dolor / ruido mental actual:
+\"\"\"{q1.strip()}\"\"\"
 
-Información adicional aportada:
-\"\"\"{extra.strip()}\"\"\"
+2) Escena concreta que se repite:
+\"\"\"{q2.strip()}\"\"\"
+
+3) Qué hace casi siempre después (conducta / patrón):
+\"\"\"{q3.strip()}\"\"\"
+
+4) Qué se dice por dentro (frases, historia interna):
+\"\"\"{q4.strip()}\"\"\"
+
+5) Emociones y cuerpo:
+\"\"\"{q5.strip()}\"\"\"
+
+6) Beneficio oculto de sostener este juego:
+\"\"\"{q6.strip()}\"\"\"
+
+7) Futuro: qué teme que pase si sigue igual y qué le gustaría que fuera distinto:
+\"\"\"{q7.strip()}\"\"\"
 
 Tarea:
-Analiza esta información siguiendo tu metodología (4 niveles emocionales + 12 arquetipos de juego viejo)
-y genera un INFORME COMPLETO siguiendo el formato especificado en el system prompt.
+Usá estas 7 respuestas como base para analizar el juego actual del usuario siguiendo tu metodología
+(4 niveles emocionales + 12 arquetipos de juego viejo) y generá un INFORME COMPLETO siguiendo el formato
+especificado en el system prompt.
 
 Usa un lenguaje coherente con el modo elegido:
 - Si el modo es Mate Tranqui, sé suave pero claro.
@@ -298,8 +297,8 @@ Usa un lenguaje coherente con el modo elegido:
 - Si el modo es Joker, usá humor irónico y comedia como vehículo, pero sin minimizar el dolor
   ni ridiculizar al usuario. El análisis debe seguir siendo profundo y claro.
 
-No le pidas al usuario que elija un área (salud, negocios, etc.). Inferí vos, si hace falta,
-en qué áreas pega este juego a partir de lo que cuenta.
+No le pidas nada extra al usuario. Todo lo que necesitás está en estas 7 respuestas.
+Inferí vos, si hace falta, en qué áreas pega este juego (dinero, relaciones, cuerpo, proyectos, etc.).
 
 Devolvé el resultado en formato Markdown.
 """
@@ -311,7 +310,7 @@ Devolvé el resultado en formato Markdown.
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": user_prompt},
                     ],
-                    temperature=0.9,  # un poquito más de creatividad, ayuda al modo Joker también
+                    temperature=0.9,
                 )
                 output = response.choices[0].message.content
 
@@ -319,7 +318,6 @@ Devolvé el resultado en formato Markdown.
                 st.subheader("🧾 Tu informe del Juego Oculto")
                 st.markdown(output)
 
-                # ---------- BOTÓN DE DESCARGA ----------
                 st.download_button(
                     label="📥 Descargar informe (.txt)",
                     data=output,
