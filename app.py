@@ -170,20 +170,8 @@ Según el modo elegido por el usuario:
 Siempre devolvés un informe estructurado en este formato (en español, claro y directo):
 
 # 🔍 Dolor principal de hoy
-- Resumen breve del dolor actual, con las palabras del usuario.
-
 # 🎭 Juego viejo que estás jugando
-- Nombre irónico del juego (ej: “Campeón Mundial del Último Minuto”).
-- Nombre serio entre paréntesis.
-- Versión personalizada usando una frase textual del usuario.
-- 1 frase que resuma el juego viejo en lenguaje cotidiano.
-
 # 🧩 Radiografía en 4 niveles
-## 1. Disparadores
-## 2. Interpretaciones (la película que te contás)
-## 3. Emoción y cuerpo
-## 4. Conducta / patrón
-
 # 🕳️ Juego oculto: reglas, miedos y beneficio
 # 🎮 Nuevo juego posible
 # 🚶 Primeros pasos (micro-movimientos)
@@ -221,13 +209,13 @@ with st.form("juego_oculto_form"):
     )
 
     q2 = st.text_area(
-        "2) Contame una escena concreta que se repite (la película que ya te sabés de memoria).",
-        height=120,
+        "2) Contame una escena concreta que se repite: quiénes están, qué pasa y cómo termina casi siempre (la película que ya te sabés de memoria).",
+        height=140,
     )
 
     q3 = st.text_area(
-        "3) Después de esa escena, ¿qué hacés casi siempre? (aunque no te guste admitirlo).",
-        height=100,
+        "3) Después de esa escena, ¿qué hacés casi siempre? (aunque no te guste admitirlo). ¿Y qué cosas ya intentaste hacer distinto?",
+        height=120,
     )
 
     q4 = st.text_area(
@@ -246,8 +234,8 @@ with st.form("juego_oculto_form"):
     )
 
     q7 = st.text_area(
-        "7) Si esto siguiera igual 12 meses, ¿qué es lo que más te asusta que pase? ¿Y qué te gustaría que fuera distinto?",
-        height=120,
+        "7) Si esto siguiera igual 12 meses, ¿qué es lo que más te asusta que pase? ¿Qué te gustaría que fuera distinto y qué creés que ya tenés a favor para poder cambiarlo?",
+        height=140,
     )
 
     submitted = st.form_submit_button("Ver mi juego oculto 🎭")
@@ -267,10 +255,10 @@ Respuestas del usuario a las 7 preguntas base del Juego Oculto:
 1) Dolor / ruido mental actual:
 \"\"\"{q1.strip()}\"\"\"
 
-2) Escena concreta que se repite:
+2) Escena concreta que se repite (quiénes están, qué pasa, cómo termina):
 \"\"\"{q2.strip()}\"\"\"
 
-3) Qué hace casi siempre después (conducta / patrón):
+3) Qué hace casi siempre después (conducta / patrón) y qué ya intentó hacer distinto:
 \"\"\"{q3.strip()}\"\"\"
 
 4) Qué se dice por dentro (frases, historia interna):
@@ -282,7 +270,7 @@ Respuestas del usuario a las 7 preguntas base del Juego Oculto:
 6) Beneficio oculto de sostener este juego:
 \"\"\"{q6.strip()}\"\"\"
 
-7) Futuro: qué teme que pase si sigue igual y qué le gustaría que fuera distinto:
+7) Futuro: qué teme que pase si sigue igual, qué le gustaría que fuera distinto y qué cree que ya tiene a favor para cambiarlo:
 \"\"\"{q7.strip()}\"\"\"
 
 Tarea:
